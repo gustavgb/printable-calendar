@@ -1,0 +1,10 @@
+@startuml
+
+(*) --> "Læs nuværende dato og find første dag i ugen"
+--> "Startende fra nuværende uge, generer et træ med Uge.Dato format"
+--> "Generer en html fil, hvor hver uge er på én side.\nHver dag har en celle i en tabel og \nugenummeret optræder på siden af tabellen, \npå venstre side på lige sidenumre og højre på ulige"
+--> Lav styling, så teksten har rigtig størrelse og placering og hver side er for sig.
+--> "Brug html-pdf til at generere en pdf ud af html filen."
+--> (*)
+
+@enduml

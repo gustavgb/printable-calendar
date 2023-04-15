@@ -1,0 +1,17 @@
+{
+  "name": "printable-calendar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "generate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "date-fns": "^2.29.3",
+    "html-pdf": "^3.0.1"
+  }
+}
