@@ -58,4 +58,59 @@ while (1) {
   }
 }
 
-console.log(firstHalf, secondHalf)
+function generateHtml (weeks) {
+  return template
+    .replace(
+      '{{title}}',
+      `week ${weeks[0].weekNo}-${weeks[weeks.length - 1].weekNo}`
+    )
+    .replace(
+      '{{content}}',
+      `
+    <div id="pages">
+      ${weeks
+        .map(
+          (week, index) => `
+      <div class="page ${index % 2 === 0 ? 'odd' : 'even'}">
+        <div class="weekNoCol"><div class="weekNo">Uge ${
+          week.weekNo
+        }</div></div>
+        <div class="days">
+          ${week.days
+            .map(
+              day => `
+          <div class="day">
+            <span class="date">${day.date}</span>
+            <span class="dayName">${day.day}</span>
+          </div>`
+            )
+            .join('')}
+        </div>
+      </div>`
+        )
+        .join('')}
+    </div>`
+    )
+}
+
+fs.writeFileSync(
+  path.resolve(
+    process.cwd(),
+    'out',
+    `week${firstHalf[0].weekNo}-${firstHalf[firstHalf.length - 1].weekNo}.html`
+  ),
+  generateHtml(firstHalf)
+)
+
+if (secondHalf.length > 0) {
+  fs.writeFileSync(
+    path.resolve(
+      process.cwd(),
+      'out',
+      `week${secondHalf[0].weekNo}-${
+        secondHalf[secondHalf.length - 1].weekNo
+      }.html`
+    ),
+    generateHtml(secondHalf)
+  )
+}
