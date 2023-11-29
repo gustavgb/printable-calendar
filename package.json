@@ -5,19 +5,20 @@
   "main": "generate.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate": "node generate.js && pagedjs-cli ./out/calendar.html -o ./out/calendar.pdf -s A6"
+    "generate": "node lib/generate.js",
+    "watch": "watch 'npm run generate' ./lib",
+    "impose": "pdfimpose perfect out/calendar.pdf"
   },
   "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "date-fns": "^2.29.3",
-    "html-pdf": "^3.0.1",
-    "standard": "^17.1.0"
+    "standard": "^17.1.0",
+    "watch": "^1.0.2"
   },
   "dependencies": {
-    "pagedjs": "^0.4.3",
-    "pagedjs-cli": "^0.4.3"
+    "date-fns": "^2.29.3",
+    "puppeteer": "^21.5.2"
   }
 }
