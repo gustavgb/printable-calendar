@@ -2,20 +2,18 @@
   "name": "printable-calendar",
   "version": "1.0.0",
   "description": "",
-  "main": "generate.js",
+  "bin": {
+    "printable-calendar": "bin/generate.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "generate": "node lib/generate.js",
-    "watch": "watch 'npm run generate' ./lib",
-    "impose": "pdfimpose perfect out/calendar.pdf"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "standard": "^17.1.0",
-    "watch": "^1.0.2"
+    "standard": "^17.1.0"
   },
   "dependencies": {
     "date-fns": "^2.29.3",

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -34,6 +36,8 @@ let date = startOfWeek(new Date(process.argv[2] || Date.now()), {
 });
 const weeks = [];
 
+console.log("Generating calender starting from", date.toLocaleDateString());
+
 while (1) {
   const weekNo = getWeek(date, { weekStartsOn: 1, firstWeekContainsDate: 4 });
 
@@ -62,7 +66,15 @@ while (1) {
   date = addDays(date, 1);
 }
 
-function generateWeekSliceHtml(week, days) {
+function generateWeekTodoHtml(week, days) {
+  return `<div class="page">
+    <div class="todolist">
+      <span class="vertical">Todoliste/Noter</span>
+      <span class="checkbox"></span>
+    </div>
+  </div>`;
+}
+function generateWeekPlanHtml(week, days) {
   return `<div class="page">
   ${days
     .map(
@@ -77,13 +89,12 @@ function generateWeekSliceHtml(week, days) {
 }
 
 function generateWeekHtml(week) {
-  return (
-    generateWeekSliceHtml(week, week.days.slice(0, 3)) +
-    generateWeekSliceHtml(week, week.days.slice(3, 7))
-  );
+  return generateWeekTodoHtml(week) + generateWeekPlanHtml(week, week.days);
 }
 
 function generateHtml(weeks) {
+  console.log("Generating html for " + weeks.length + " weeks");
+
   return template
     .replace(
       "{{title}}",
@@ -109,6 +120,8 @@ function generateHtml(weeks) {
 }
 
 async function printToPdf(html) {
+  console.log("Printing to pdf");
+
   // Based on https://www.bannerbear.com/blog/how-to-convert-html-into-pdf-with-node-js-and-puppeteer/
   // Create a browser instance
   const browser = await puppeteer.launch({
@@ -122,7 +135,7 @@ async function printToPdf(html) {
 
   // Download the PDF
   const pdf = await page.pdf({
-    path: path.resolve(process.cwd(), "out", "calendar.pdf"),
+    path: path.resolve(process.cwd(), "calendar.pdf"),
     margin: { top: "0", right: "0", bottom: "0", left: "0" },
     printBackground: true,
     format: "A6",
@@ -130,6 +143,10 @@ async function printToPdf(html) {
 
   // Close the browser instance
   await browser.close();
+
+  console.log("PDF saved to", path.resolve(process.cwd(), "calendar.pdf"));
 }
+
+// fs.writeFileSync(path.resolve(process.cwd(), "out", "calendar.html"), generateHtml(weeks))
 
 printToPdf(generateHtml(weeks));
